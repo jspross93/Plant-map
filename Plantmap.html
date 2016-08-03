@@ -1,15 +1,128 @@
 <html>
-
 <head>
-
-<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
-
-script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
-  
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+ 
 </head>
 <body>
 
- <div id="mapid">mapid { height: 150px; }</div>
+<h1>Old Growth Forests of PA</h1>
 
+<h2>by Jodie Spross</h2>
+
+<div id='mapid' style="height:800px;"></div>
+
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+<script>
+
+var mymap = L.map('mapid').setView([40.8950,-77.7720],8);
+L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+	maxZoom: 16
+}).addTo(mymap);
+
+function onEachFeature(feature, layer) {
+    // does this feature have a property named popupContent?
+    if (feature.properties && feature.properties.popupContent) {
+        layer.bindPopup(feature.properties.name + "<br />" + feature.properties.popupContent);
+    }
+}
+
+var forestdata = {
+	"type"    : "FeatureCollection",
+	"features": [{
+    "type": "Feature",
+    "properties": {
+        "name": "Ricketts Glen",
+        "amenity": "Old Growth Forest",
+        "popupContent": "2000 acres - Northern Hardwood Forest"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-76.1646,41.1934]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Tionesta",
+        "amenity": "Old Growth Forest",
+        "popupContent": "4000 acres - Eastern Hemlock, American Beech, Sugar Maple"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-78.5614, 41.3838]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Cooks Forest",
+        "amenity": "Old Growth Forest",
+        "popupContent": "1500-2000 acres - Eastern White Pine, Eastern Hemlock, Northern Red Oak, White Oak, etc."
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-79.0950, 41.1925]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Bear Meadows",
+        "amenity": "Old Growth Forest",
+        "popupContent": "320 acres - Black Spruce, Balsam Fir bog"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-77.4550, 40.4345]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Holtwood Preserve",
+        "amenity": "Old Growth Forest",
+        "popupContent": "200 acres - Chestnut Oak, Eastern Hemlock, Umbrella Magnolia"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+            [-76.3178444,39.8465093],
+            [-76.318636,39.8401143],
+            [-76.3318205,39.8332203],
+            [-76.3386277,39.8470818]
+        ]]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Snyder Middleswarth",
+        "amenity": "Old Growth Forest",
+        "popupContent": "250 acres - Eastern Hemlock, Eastern White Pine, Pitch Pine"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-77.1659, 40.4836]
+    }
+},
+{
+    "type": "Feature",
+    "properties": {
+        "name": "Hearts Content",
+        "amenity": "Old Growth Forest",
+        "popupContent": "122 acres - Eastern White Pine, Eastern Hemlock, American Beech"
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-79.15152, 41.41333]
+    }
+}]
+}
+L.geoJson(forestdata, {
+    onEachFeature: onEachFeature
+}).addTo(mymap);
+</script>
 </body>
 </html>
